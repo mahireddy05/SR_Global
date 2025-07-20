@@ -123,6 +123,10 @@ button:focus {
 
 
 @media (max-width: 768px) {
+    #form{
+        margin: 10px 7%;
+    }
+
     #legend1{
         font-size: 20px;
     }
