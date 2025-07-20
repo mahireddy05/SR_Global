@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SR-Global-Std-Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img id="logo" src="logo.jpg" alt="SR Global Logo" title="SR Global Educational Consultancy">
+        <h1 id="cmpname">SR Global Educational Consultancy</h1>
+    </header>
+    <main>
+        <fieldset id="form">
+            <legend id="legend1">SR Global Educational Consultancy (Opening door to the world through education)</legend>
+            <form action="https://httpbin.org" method="post">
+                <fieldset>
+                    <legend>Personal Details</legend>
+                    <div class="details">
+                        <p><label for="name">Name : </label><input type="text" id="name" placeholder="Eg: Jon Doe" required autocomplete autofocus></p>
+                        <p><label for="dob">Date of Birth : </label><input type="date" id="dob" name="dob" required></p>
+                        <p><label for="clgname">College : </label><input type="text" id="clgname" name="college name" required placeholder="Eg: XYZ University"></p>
+                        <p><label for="residence">Residence : </label><input type="text" id="residence" name="Residence" required placeholder="Eg: Guntur"></p>
+                        <p><label for="email">Email-ID : </label><input type="email" id="email" name="Email-ID" required placeholder="Eg: xyz@gmail.com"></p>
+                        <p><label for="mobile">Mobile : </label><input type="tel" id="mobile" name="mobile" required placeholder="Eg: XXXXXXXXXX"></p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Academic Details (Starting with highest)</legend>
+                    <div class="details">
+                        <p><label for="cname">College/School : </label><input type="text" id="cname" placeholder="Eg: KL University" required></p>
+                        <p><label for="Major">Major Degree : </label><input type="text" id="major" name="Major" required placeholder="Eg: Computer Science and Engineering"></p>
+                        <p><label for="ystart">Year Started : </label><input type="number" id="ystart" name="ystart" required placeholder="Eg: 1950" min="1950" max="3000"></p>
+                        <p><label for="ycomp">Year Completed : </label><input type="number" id="ycomp" name="ycomp" required placeholder="Eg: 2026" min="1950" max="3000"></p>
+                        <p><label for="score">Score in(%) : </label><input type="number" id="score" name="Score" required placeholder="Eg: 92%" min="0" max="100"></p>
+                        <p><label for="backlog">Number of Backlogs : </label><input type="number" id="backlog" name="backlog" required placeholder="Eg: 0" min="0" max="80"></p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Preferred Countries</legend>
+                    <div class="checkbox">
+                        <p><label for="australia">Australia</label><input type="checkbox" id="australia"></p>
+                        <p><label for="USA">USA</label><input type="checkbox" id="USA"></p>
+                        <p><label for="Canada">Canada</label><input type="checkbox" id="Canada"></p>
+                        <p><label for="UK">UK</label><input type="checkbox" id="UK"></p>
+                        <p><label for="newzeland">New Zealand</label><input type="checkbox" id="newzeland"></p>
+                        <p><label for="Ireland">Ireland</label><input type="checkbox" id="Ireland"></p>
+                        <p><label for="France">France</label><input type="checkbox" id="France"></p>
+                        <p><label for="Germany">Germany</label><input type="checkbox" id="Germany"></p>
+                        <p><label for="Others">Others</label><input type="text" id="Others" placeholder="Mention if any other"></p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Preferred Program</legend>
+                    <div class="checkbox">
+                        <p><label for="IT">Information Technology</label><input type="checkbox" id="IT"></p>
+                        <p><label for="eng">Engineering</label><input type="checkbox" id="eng"></p>
+                        <p><label for="B&M">Business & Management</label><input type="checkbox" id="B&M"></p>
+                        <p><label for="HS">Health Science</label><input type="checkbox" id="HS"></p>
+                        <p><label for="LS">Life Sciences</label><input type="checkbox" id="LS"></p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Level</legend>
+                    <div class="checkbox">
+                        <p><label for="Phd">Phd</label><input type="checkbox" id="Phd"></p>
+                        <p><label for="Masters">Masters</label><input type="checkbox" id="Masters"></p>
+                        <p><label for="Bachelor">Bachelor</label><input type="checkbox" id="Bachelor"></p>
+                        <p><label for="Diploma">Diploma</label><input type="checkbox" id="Diploma"></p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Previous Visa Rejections</legend>
+                    <label for="yes">Yes</label><input type="radio" id="yes" name="visaRejection">
+                    <label for="no">No</label><input type="radio" id="no" name="visaRejection">
+                </fieldset>
+
+                <fieldset>
+                    <legend>How did you know about us?</legend>
+                    <div class="checkbox">
+                        <p><label for="Friends">Friends</label><input type="checkbox" id="Friends"></p>
+                        <p><label for="Telecalling">Telecalling</label><input type="checkbox" id="Telecalling"></p>
+                        <p><label for="CS">College Seminar</label><input type="checkbox" id="CS"></p>
+                        <p><label for="ec">Email Campaign</label><input type="checkbox" id="ec"></p>
+                        <p><label for="socialmedia">Social Media</label><input type="checkbox" id="socialmedia"></p>
+                    </div>
+                </fieldset>
+
+                <div id="button">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                </div>
+            </form>
+        </fieldset>
+    </main>
+</body>
+</html>
