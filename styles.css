@@ -36,8 +36,8 @@ header{
 
 legend{
     margin-left: 40px;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight:700;
+    font-family: "Parkinsans", sans-serif;
+    font-weight:600;
     color: #22333B;
     font-size: 18px;
 }
@@ -45,7 +45,7 @@ legend{
 fieldset{
     margin: 10px 5px;
     border: 2px solid #22333B;
-    border-radius: 40px;
+    border-radius: 20px;
     padding: 15px;
 }
 
@@ -55,16 +55,51 @@ fieldset{
     flex-wrap: wrap;
     gap: 30px;
     justify-content: space-between;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Parkinsans", sans-serif;
     font-weight:700;
 }
 
 .details p {
     color: #22333B;
-    font-size: 17px;
+    font-size: 16px;
+    font-weight: 500;
     flex: 1 1 calc(33.33% - 20px);
     max-width: calc(33.33% - 20px);
     box-sizing: border-box;
+}
+
+.checkbox {
+  display: grid;
+  width: 70%;
+  grid-template-columns: repeat(2, auto); /* 3 columns */
+  gap: 10px;
+  font-family: "Parkinsans", sans-serif;
+  margin: auto;
+}
+
+.checkbox input{
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  width: auto;
+}
+
+.checkbox label{
+    margin-right: auto;
+}
+
+.checkbox p{
+    display: flex;
+    flex-direction: row-reverse;
+    gap:10px;
+}
+
+.checkbox h5, .checkbox h5 label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3%;
+    margin: 0;
 }
 
 input, select, textarea {
@@ -72,7 +107,7 @@ input, select, textarea {
     border: 1px solid #999;
     border-radius: 8px;
     padding: 8px 10px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Parkinsans", sans-serif;
     font-size: 16px;
     width: 100%;
     box-sizing: border-box;
@@ -100,7 +135,7 @@ button {
     border-radius: 8px;
     padding: 10px 25px;
     font-size: 16px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Parkinsans", sans-serif;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -172,5 +207,14 @@ button:focus {
     #cmpname {
         font-size: 20px;
         margin-top: 5px;
+    }
+
+    .checkbox {
+        display: grid;
+        width: 85%;
+        grid-template-columns: repeat(1, auto); /* 3 columns */
+        gap: 10px;
+        font-family: "Parkinsans", sans-serif;
+        margin: auto;
     }
 }

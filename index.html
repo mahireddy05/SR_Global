@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SR-Global-Std-Form</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -50,7 +53,7 @@
                         <p><label for="Ireland">Ireland</label><input type="checkbox" id="Ireland"></p>
                         <p><label for="France">France</label><input type="checkbox" id="France"></p>
                         <p><label for="Germany">Germany</label><input type="checkbox" id="Germany"></p>
-                        <p><label for="Others">Others</label><input type="text" id="Others" placeholder="Mention if any other"></p>
+                        <h5><label for="Others">Others : </label><input type="text" id="Others" placeholder="Mention if any other"></h5>
                     </div>
                 </fieldset>
 
@@ -77,8 +80,10 @@
 
                 <fieldset>
                     <legend>Previous Visa Rejections</legend>
-                    <label for="yes">Yes</label><input type="radio" id="yes" name="visaRejection">
-                    <label for="no">No</label><input type="radio" id="no" name="visaRejection">
+                    <div class="checkbox">
+                        <p><label for="yes">Yes</label><input type="radio" id="yes" name="visaRejection"></p>
+                        <p><label for="no">No</label><input type="radio" id="no" name="visaRejection"></p>
+                    </div>
                 </fieldset>
 
                 <fieldset>
