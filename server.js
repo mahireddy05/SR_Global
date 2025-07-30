@@ -1,6 +1,6 @@
 // server.js
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysq');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
