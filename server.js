@@ -1,6 +1,6 @@
 // server.js
 const express = require('express');
-const mysql = require('mysq');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
@@ -21,12 +21,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // ---------------- DATABASE CONNECTION ---------------- //
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '2406',
+  database: 'srglobal'
 });
 
 db.connect(err => {
