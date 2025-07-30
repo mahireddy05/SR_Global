@@ -62,7 +62,7 @@ app.post('/submit', (req, res) => {
   const dateTimeString = now.toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
   const prefix = `SRG${dateTimeString}`;
 
-  connection.query('SELECT COUNT(*) AS count FROM students', (err, result) => {
+  db.query('SELECT COUNT(*) AS count FROM students', (err, result) => {
     if (err) return res.status(500).send('Database error.');
 
     const serial = (result[0].count + 1).toString().padStart(5, '0');
@@ -91,7 +91,7 @@ app.post('/submit', (req, res) => {
       submissionTime
     ];
 
-   connection.query(studentSql, studentValues, (err) => {
+    db.query(studentSql, studentValues, (err) => {
       if (err) return res.status(500).send('Insert failed.');
 
       const academicData = Array.isArray(data.institution) ? data.institution.map((_, i) => ([
@@ -117,7 +117,7 @@ app.post('/submit', (req, res) => {
         VALUES ?
       `;
 
-     connection.query(academicSql, [academicData], (err) => {
+      db.query(academicSql, [academicData], (err) => {
         if (err) return res.status(500).send('Academic insert failed.');
 
         res.send(`
@@ -139,7 +139,7 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
   const query = 'SELECT * FROM admin_users WHERE username = ? AND password = ?';
 
-  connection.query(query, [username, password], (err, results) => {
+  db.query(query, [username, password], (err, results) => {
     if (err) return res.render('login', { error: 'Database error. Try again.' });
 
     if (results.length > 0) {
@@ -161,7 +161,7 @@ app.post('/logout', (req, res) => {
 // ---------------- ADMIN PANEL ---------------- //
 app.get('/admin', checkAuth, (req, res) => {
   const username = req.session.adminUsername || 'Admin';
-  connection.query('SELECT * FROM students ORDER BY submission_time DESC', (err, rows) => {
+  db.query('SELECT * FROM students ORDER BY submission_time DESC', (err, rows) => {
     if (err) return res.status(500).send('Failed to fetch records.');
     res.render('admin', { students: rows, username });
   });
@@ -173,11 +173,11 @@ app.get('/view/:submission_id', checkAuth, (req, res) => {
   const studentQuery = 'SELECT * FROM students WHERE submission_id = ?';
   const academicQuery = 'SELECT * FROM academic_details WHERE submission_id = ?';
 
-  connection.query(studentQuery, [sid], (err, studentResult) => {
+  db.query(studentQuery, [sid], (err, studentResult) => {
     if (err || studentResult.length === 0) return res.status(500).send('Failed to fetch student.');
     const student = studentResult[0];
 
-    connection.query(academicQuery, [sid], (err, academics) => {
+    db.query(academicQuery, [sid], (err, academics) => {
       if (err) return res.status(500).send('Failed to fetch academic records.');
       res.render('view', { student, academics });
     });
@@ -187,9 +187,9 @@ app.get('/view/:submission_id', checkAuth, (req, res) => {
 // ---------------- DELETE STUDENT ---------------- //
 app.get('/delete/:submission_id', checkAuth, (req, res) => {
   const sid = req.params.submission_id;
-  connection.query('DELETE FROM academic_details WHERE submission_id = ?', [sid], (err) => {
+  db.query('DELETE FROM academic_details WHERE submission_id = ?', [sid], (err) => {
     if (err) return res.status(500).send('Failed to delete academic records.');
-    connection.query('DELETE FROM students WHERE submission_id = ?', [sid], (err) => {
+    db.query('DELETE FROM students WHERE submission_id = ?', [sid], (err) => {
       if (err) return res.status(500).send('Failed to delete student record.');
       res.redirect('/admin');
     });
@@ -202,11 +202,11 @@ app.get('/edit/:submission_id', checkAuth, (req, res) => {
   const studentQuery = 'SELECT * FROM students WHERE submission_id = ?';
   const academicQuery = 'SELECT * FROM academic_details WHERE submission_id = ?';
 
-  connection.query(studentQuery, [sid], (err, studentResult) => {
+  db.query(studentQuery, [sid], (err, studentResult) => {
     if (err || studentResult.length === 0) return res.status(500).send('Failed to load edit form.');
     const student = studentResult[0];
 
-    connection.query(academicQuery, [sid], (err, academics) => {
+    db.query(academicQuery, [sid], (err, academics) => {
       if (err) return res.status(500).send('Failed to load academic data.');
       res.render('edit', { student, academics });
     });
@@ -244,10 +244,10 @@ app.post('/edit/:submission_id', checkAuth, (req, res) => {
     sid
   ];
 
-  connection.query(updateStudentSql, studentValues, (err) => {
+  db.query(updateStudentSql, studentValues, (err) => {
     if (err) return res.status(500).send('Update failed.');
 
-    connection.query('DELETE FROM academic_details WHERE submission_id = ?', [sid], (err) => {
+    db.query('DELETE FROM academic_details WHERE submission_id = ?', [sid], (err) => {
       if (err) return res.status(500).send('Failed to delete old academics.');
 
       const academicData = JSON.parse(data.academic_json || '[]').map(row => ([
@@ -267,7 +267,7 @@ app.post('/edit/:submission_id', checkAuth, (req, res) => {
         VALUES ?
       `;
 
-      connection.query(academicSql, [academicData], (err) => {
+      db.query(academicSql, [academicData], (err) => {
         if (err) return res.status(500).send('Failed to insert updated academics.');
         res.redirect('/admin');
       });
