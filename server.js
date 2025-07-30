@@ -29,14 +29,13 @@ const connection = mysql.createConnection({
   port: process.env.DB_PORT || 3306
 });
 
-connection.connect(err => {
+db.connect(err => {
   if (err) {
     console.error('❌ MySQL connection failed:', err.message);
     process.exit(1);
   }
   console.log('✅ MySQL Connected!');
 });
-
 
 // ---------------- AUTH MIDDLEWARE ---------------- //
 function checkAuth(req, res, next) {
