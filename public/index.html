@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SR-Global-Std-Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <img id="logo" src="logo.jpg" alt="SR Global Logo" title="SR Global Educational Consultancy">
+        <h1 id="cmpname">SR Global Educational Consultancy</h1>
+        <a href="/login">Admin</a>
+    </header>
+    <main>
+        <fieldset id="form">
+            <legend id="legend1">SR Global Educational Consultancy (Opening door to the world through education)</legend>
+            <form action="/submit" method="POST">
+                <!-- Personal Details -->
+                <fieldset>
+                    <legend>Personal Details</legend>
+                    <div class="details">
+                        <p><label for="name">Name : </label><input type="text" id="name" name="name" placeholder="Eg: Jon Doe" required autocomplete="on"></p>
+                        <p><label for="dob">Date of Birth : </label><input type="date" id="dob" name="dob" required></p>
+                        <p><label for="clgname">College : </label><input type="text" id="clgname" name="college" required placeholder="Eg: XYZ University"></p>
+                        <p><label for="residence">Residence : </label><input type="text" id="residence" name="residence" required placeholder="Eg: Guntur"></p>
+                        <p><label for="email">Email-ID : </label><input type="email" id="email" name="email" required placeholder="Eg: xyz@gmail.com"></p>
+                        <p><label for="mobile">Mobile : </label><input type="tel" id="mobile" name="mobile" required placeholder="Eg: XXXXXXXXXX"></p>
+                    </div>
+                </fieldset>
+
+                <!-- Academic Details -->
+                <fieldset>
+                    <legend>Academic Details (Starting with highest)</legend>
+                    <div id="academic-container">
+                        <div class="details academic-entry">
+                            <p><label for="cname">College/School : </label><input type="text" name="institution" required placeholder="Eg: KL University"></p>
+                            <p><label for="major">Major Degree : </label><input type="text" name="major" required placeholder="Eg: Computer Science and Engineering"></p>
+                            <p><label for="ystart">Year Started : </label><input type="number" name="ystart" required placeholder="Eg: 1950" min="1950" max="3000"></p>
+                            <p><label for="ycomp">Year Completed : </label><input type="number" name="ycomp" required placeholder="Eg: 2026" min="1950" max="3000"></p>
+                            <p><label for="score">Score in(%) : </label><input type="number" name="score" required placeholder="Eg: 92%" min="0" max="100"></p>
+                            <p><label for="backlog">Number of Backlogs : </label><input type="number" name="backlog" required placeholder="Eg: 0" min="0" max="80"></p>
+                        </div>
+                    </div>
+                    <button type="button" id="add-academic" style="margin-top: 10px;">Add More</button>
+                </fieldset>
+
+
+                <!-- Preferred Countries -->
+                <fieldset>
+                    <legend>Preferred Countries</legend>
+                    <div class="checkbox">
+                        <input type="hidden" name="countries[]" value="">
+                        <p><input type="checkbox" id="australia" name="countries[]" value="Australia"><label for="australia">Australia</label></p>
+                        <p><input type="checkbox" id="USA" name="countries[]" value="USA"><label for="USA">USA</label></p>
+                        <p><input type="checkbox" id="Canada" name="countries[]" value="Canada"><label for="Canada">Canada</label></p>
+                        <p><input type="checkbox" id="UK" name="countries[]" value="UK"><label for="UK">UK</label></p>
+                        <p><input type="checkbox" id="newzeland" name="countries[]" value="New Zealand"><label for="newzeland">New Zealand</label></p>
+                        <p><input type="checkbox" id="Ireland" name="countries[]" value="Ireland"><label for="Ireland">Ireland</label></p>
+                        <p><input type="checkbox" id="France" name="countries[]" value="France"><label for="France">France</label></p>
+                        <p><input type="checkbox" id="Germany" name="countries[]" value="Germany"><label for="Germany">Germany</label></p>
+                        <p><label for="Others">Others : </label><input type="text" id="Others" name="countries[]" placeholder="Mention if any other"></p>
+                    </div>
+                </fieldset>
+
+                <!-- Preferred Program -->
+                <fieldset>
+                    <legend>Preferred Program</legend>
+                    <div class="checkbox">
+                        <input type="hidden" name="programs[]" value="">
+                        <p><input type="checkbox" id="IT" name="programs[]" value="Information Technology"><label for="IT">Information Technology</label></p>
+                        <p><input type="checkbox" id="eng" name="programs[]" value="Engineering"><label for="eng">Engineering</label></p>
+                        <p><input type="checkbox" id="B&M" name="programs[]" value="Business & Management"><label for="B&M">Business & Management</label></p>
+                        <p><input type="checkbox" id="HS" name="programs[]" value="Health Science"><label for="HS">Health Science</label></p>
+                        <p><input type="checkbox" id="LS" name="programs[]" value="Life Sciences"><label for="LS">Life Sciences</label></p>
+                    </div>
+                </fieldset>
+
+                <!-- Level -->
+                <fieldset>
+                    <legend>Level</legend>
+                    <div class="checkbox">
+                        <input type="hidden" name="level[]" value="">
+                        <p><input type="checkbox" id="Phd" name="level[]" value="PhD"><label for="Phd">PhD</label></p>
+                        <p><input type="checkbox" id="Masters" name="level[]" value="Masters"><label for="Masters">Masters</label></p>
+                        <p><input type="checkbox" id="Bachelor" name="level[]" value="Bachelor"><label for="Bachelor">Bachelor</label></p>
+                        <p><input type="checkbox" id="Diploma" name="level[]" value="Diploma"><label for="Diploma">Diploma</label></p>
+                    </div>
+                </fieldset>
+
+                <!-- Visa -->
+                <fieldset>
+                    <legend>Previous Visa Rejections</legend>
+                    <div class="checkbox">
+                        <p><input type="radio" id="yes" name="visa_status" value="Yes" required><label for="yes">Yes</label></p>
+                        <p><input type="radio" id="no" name="visa_status" value="No" required><label for="no">No</label></p>
+                    </div>
+                </fieldset>
+
+                <!-- Referral -->
+                <fieldset>
+                    <legend>How did you know about us?</legend>
+                    <div class="checkbox">
+                        <input type="hidden" name="referral[]" value="">
+                        <p><input type="checkbox" id="Friends" name="referral[]" value="Friends"><label for="Friends">Friends</label></p>
+                        <p><input type="checkbox" id="Telecalling" name="referral[]" value="Telecalling"><label for="Telecalling">Telecalling</label></p>
+                        <p><input type="checkbox" id="CS" name="referral[]" value="College Seminar"><label for="CS">College Seminar</label></p>
+                        <p><input type="checkbox" id="ec" name="referral[]" value="Email Campaign"><label for="ec">Email Campaign</label></p>
+                        <p><input type="checkbox" id="socialmedia" name="referral[]" value="Social Media"><label for="socialmedia">Social Media</label></p>
+                    </div>
+                </fieldset>
+
+                <!-- Buttons -->
+                <div id="button">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                </div>
+            </form>
+        </fieldset>
+    </main>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Student - <%= student.name %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Roboto", Arial, sans-serif;
+      background: #f2f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1f4e79;
+      margin-bottom: 25px;
+    }
+
+    form {
+      max-width: 950px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      padding: 20px;
+    }
+
+    legend {
+      font-weight: 600;
+      font-size: 18px;
+      color: #235789;
+      padding: 0 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .checkbox, .radio {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .checkbox label,
+    .radio label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      transform: scale(1.1);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button, .cancel-btn {
+      background-color: #235789;
+      color: white;
+      padding: 14px 20px;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      flex: 1;
+      min-width: 140px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover, .cancel-btn:hover {
+      background-color: #183a61;
+    }
+
+    .academic-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .academic-row input {
+      flex: 1 1 150px;
+    }
+
+    .add-academic-btn {
+      background-color: #28a745;
+      margin-top: 15px;
+    }
+
+    .remove-academic-btn {
+      background-color: #dc3545;
+    }
+
+    @media (max-width: 600px) {
+      .checkbox, .radio {
+        grid-template-columns: 1fr;
+      }
+      .academic-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Edit Student</h2>
+
+  <form action="/edit/<%= student.submission_id %>" method="POST" onsubmit="prepareAcademicData()">
+
+    <!-- Personal Details -->
+    <fieldset>
+      <legend>Personal Details</legend>
+
+      <label>Name</label>
+      <input type="text" name="name" value="<%= student.name %>" required>
+
+      <label>Date of Birth</label>
+      <input type="date" name="dob" value="<%= student.dob ? new Date(student.dob).toISOString().split('T')[0] : '' %>">
+
+      <label>College</label>
+      <input type="text" name="college" value="<%= student.college %>">
+
+      <label>Residence</label>
+      <input type="text" name="residence" value="<%= student.residence %>">
+
+      <label>Email</label>
+      <input type="email" name="email" value="<%= student.email %>" required>
+
+      <label>Mobile</label>
+      <input type="text" name="mobile" value="<%= student.mobile %>">
+    </fieldset>
+
+    <!-- Academic Details -->
+    <fieldset>
+      <legend>Academic Details</legend>
+      <div id="academic-container"></div>
+      <button type="button" class="add-academic-btn" onclick="addAcademicRow()">+ Add Academic Record</button>
+      <input type="hidden" name="academic_json" id="academic_json">
+    </fieldset>
+
+    <!-- Preferred Countries -->
+    <fieldset>
+      <legend>Preferred Countries</legend>
+      <div class="checkbox">
+        <input type="hidden" name="countries[]" value="">
+        <% const selectedCountries = (student.countries || '').split(',').map(c => c.trim()); %>
+        <% ['Australia', 'USA', 'Canada', 'UK', 'New Zealand', 'Ireland', 'France', 'Germany'].forEach(c => { %>
+          <label><input type="checkbox" name="countries[]" value="<%= c %>" <%= selectedCountries.includes(c) ? 'checked' : '' %>> <%= c %></label>
+        <% }) %>
+      </div>
+    </fieldset>
+
+    <!-- Preferred Programs -->
+    <fieldset>
+      <legend>Preferred Programs</legend>
+      <div class="checkbox">
+        <input type="hidden" name="programs[]" value="">
+        <% const selectedPrograms = (student.programs || '').split(',').map(p => p.trim()); %>
+        <% ['Information Technology', 'Engineering', 'Business & Management', 'Health Science', 'Life Sciences'].forEach(p => { %>
+          <label><input type="checkbox" name="programs[]" value="<%= p %>" <%= selectedPrograms.includes(p) ? 'checked' : '' %>> <%= p %></label>
+        <% }) %>
+      </div>
+    </fieldset>
+
+    <!-- Level -->
+    <fieldset>
+      <legend>Level</legend>
+      <div class="checkbox">
+        <input type="hidden" name="level[]" value="">
+        <% const selectedLevels = (student.level || '').split(',').map(l => l.trim()); %>
+        <% ['PhD', 'Masters', 'Bachelor', 'Diploma'].forEach(l => { %>
+          <label><input type="checkbox" name="level[]" value="<%= l %>" <%= selectedLevels.includes(l) ? 'checked' : '' %>> <%= l %></label>
+        <% }) %>
+      </div>
+    </fieldset>
+
+    <!-- Visa Status -->
+    <fieldset>
+      <legend>Previous Visa Rejections</legend>
+      <div class="radio">
+        <label><input type="radio" name="visa_status" value="Yes" <%= student.visa_status === 'Yes' ? 'checked' : '' %>> Yes</label>
+        <label><input type="radio" name="visa_status" value="No" <%= student.visa_status === 'No' ? 'checked' : '' %>> No</label>
+      </div>
+    </fieldset>
+
+    <!-- Referral -->
+    <fieldset>
+      <legend>Referral</legend>
+      <div class="checkbox">
+        <input type="hidden" name="referral[]" value="">
+        <% const selectedReferrals = (student.referral || '').split(',').map(r => r.trim()); %>
+        <% ['Friends', 'Telecalling', 'College Seminar', 'Email Campaign', 'Social Media'].forEach(r => { %>
+          <label><input type="checkbox" name="referral[]" value="<%= r %>" <%= selectedReferrals.includes(r) ? 'checked' : '' %>> <%= r %></label>
+        <% }) %>
+      </div>
+    </fieldset>
+
+    <!-- Submit Buttons -->
+    <div class="form-actions">
+      <button type="submit">Update</button>
+      <a class="cancel-btn" href="/admin">Cancel</a>
+    </div>
+  </form>
+
+  <script>
+    const academicContainer = document.getElementById('academic-container');
+    const academicData = <%- JSON.stringify(academics || []) %>;
+
+    function addAcademicRow(a = {}) {
+      const row = document.createElement('div');
+      row.className = 'academic-row';
+      row.innerHTML = `
+        <input type="text" placeholder="Institution" value="${a.institution || ''}" class="institution">
+        <input type="text" placeholder="Major" value="${a.major || ''}" class="major">
+        <input type="number" placeholder="Start Year" value="${a.ystart || ''}" class="ystart">
+        <input type="number" placeholder="Completion Year" value="${a.ycomp || ''}" class="ycomp">
+        <input type="number" placeholder="Score %" value="${a.score || ''}" class="score">
+        <input type="number" placeholder="Backlogs" value="${a.backlog || ''}" class="backlog">
+        <button type="button" class="remove-academic-btn" onclick="this.parentNode.remove()">Remove</button>
+      `;
+      academicContainer.appendChild(row);
+    }
+
+    academicData.forEach(addAcademicRow);
+
+    function prepareAcademicData() {
+      const rows = document.querySelectorAll('.academic-row');
+      const academic = [];
+      rows.forEach(r => {
+        academic.push({
+          institution: r.querySelector('.institution').value,
+          major: r.querySelector('.major').value,
+          ystart: r.querySelector('.ystart').value,
+          ycomp: r.querySelector('.ycomp').value,
+          score: r.querySelector('.score').value,
+          backlog: r.querySelector('.backlog').value,
+        });
+      });
+      document.getElementById('academic_json').value = JSON.stringify(academic);
+    }
+  </script>
+</body>
+</html>

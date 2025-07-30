@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - SR Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0; padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 16px 24px;
+      flex-wrap: wrap;
+    }
+    header .left { display: flex; align-items: center; }
+    header img { height: 45px; margin-right: 12px; }
+    header h1 { font-size: 20px; margin: 0; }
+    .right-section {
+      display: flex; align-items: center;
+      gap: 15px; flex-wrap: wrap;
+    }
+    header p { font-size: 14px; margin: 0; padding-top: 4px; }
+    header button {
+      background: white; color: #1e3a8a;
+      border: none; padding: 8px 14px;
+      border-radius: 5px; font-weight: 600;
+      cursor: pointer;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      padding: 20px;
+    }
+    .controls input, .controls select, .controls button {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+      padding: 0 15px 40px;
+    }
+    table {
+      width: 100%; border-collapse: collapse; margin: 0 auto;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    tr:nth-child(even) td { background-color: #f9fafb; }
+    tr:hover td { background-color: #eef2f7; }
+    td ul {
+      list-style: none;
+      padding: 0px;
+      margin: 0;
+      text-align: left;
+    }
+    .action a {
+      color: #1e3a8a;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    .action a:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      td, th { font-size: 13px; padding: 10px 8px; }
+      header { flex-direction: column; align-items: flex-start; }
+      .right-section { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <img src="/logo.jpg" alt="SR Global Logo">
+      <h1>Admin Panel – Submissions</h1>
+    </div>
+    <div class="right-section">
+      <p>Welcome, <strong><%= username %></strong></p>
+      <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search by any field...">
+    <select id="filterLevel">
+      <option value="">Filter by Level</option>
+      <option value="PhD">PhD</option>
+      <option value="Masters">Masters</option>
+      <option value="Bachelor">Bachelor</option>
+      <option value="Diploma">Diploma</option>
+    </select>
+    <select id="filterCountry">
+      <option value="">Filter by Country</option>
+      <option value="USA">USA</option>
+      <option value="Canada">Canada</option>
+      <option value="Germany">Germany</option>
+      <option value="UK">UK</option>
+      <option value="France">France</option>
+      <option value="Australia">Australia</option>
+      <option value="New Zealand">New Zealand</option>
+      <option value="Ireland">Ireland</option>
+    </select>
+    <select id="relativeDate">
+      <option value="">Select Relative Date</option>
+      <option value="7">Past 7 Days</option>
+      <option value="30">Past 30 Days</option>
+    </select>
+    <button onclick="clearFilters()">Clear Filters</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="submissionTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Submission ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Programs</th>
+          <th>Countries</th>
+          <th>Level</th>
+          <th>Submitted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% students.forEach((s, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= s.submission_id %></td>
+            <td><%= s.name %></td>
+            <td><%= s.email %></td>
+            <td><%= s.mobile %></td>
+            <td><ul><% s.programs.split(',').forEach(item => { %><li><%= item.trim() %></li><% }) %></ul></td>
+            <td><ul><% s.countries.split(',').forEach(item => { %><li><%= item.trim() %></li><% }) %></ul></td>
+            <td><ul><% s.level.split(',').forEach(item => { %><li><%= item.trim() %></li><% }) %></ul></td>
+            <td><%= new Date(s.submission_time).toLocaleString() %></td>
+            <td class="action">
+              <a href="/view/<%= s.submission_id %>">View</a>
+              <a href="/edit/<%= s.submission_id %>">Edit</a>
+              <a href="/delete/<%= s.submission_id %>" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const filterLevel = document.getElementById('filterLevel');
+    const filterCountry = document.getElementById('filterCountry');
+    const relativeDate = document.getElementById('relativeDate');
+    const rows = document.querySelectorAll('#submissionTable tbody tr');
+
+    function clearFilters() {
+      searchInput.value = '';
+      filterLevel.value = '';
+      filterCountry.value = '';
+      relativeDate.value = '';
+      filterRows();
+    }
+
+    function filterRows() {
+      const query = searchInput.value.toLowerCase();
+      const level = filterLevel.value.toLowerCase();
+      const country = filterCountry.value.toLowerCase();
+      const relDays = parseInt(relativeDate.value);
+
+      const today = new Date();
+      const relativeFrom = new Date();
+      if (!isNaN(relDays)) relativeFrom.setDate(today.getDate() - relDays);
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const dateText = row.cells[8].innerText;
+        const rowDate = new Date(dateText);
+
+        const queryMatch = !query || text.includes(query);
+        const levelMatch = !level || row.cells[7].innerText.toLowerCase().includes(level);
+        const countryMatch = !country || row.cells[6].innerText.toLowerCase().includes(country);
+        const relMatch = isNaN(relDays) || rowDate >= relativeFrom;
+
+        const showRow = queryMatch && levelMatch && countryMatch && relMatch;
+        row.style.display = showRow ? '' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterRows);
+    filterLevel.addEventListener('change', filterRows);
+    filterCountry.addEventListener('change', filterRows);
+    relativeDate.addEventListener('change', filterRows);
+  </script>
+</body>
+</html>

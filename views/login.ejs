@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login - SR Global</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Parkinsans', sans-serif;
+      background: #f2f7fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-height: 60px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #235789;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: red;
+      background: #ffe9e9;
+      border: 1px solid #ffb0b0;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 93%;
+      padding: 12px;
+      margin: 8px 0 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .password-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: -12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #235789;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1b456a;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <!-- Optional logo -->
+    <!-- <img src="/logo.jpg" alt="SR Global Logo" class="logo"> -->
+    
+    <h2>Admin Login</h2>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" id="password" placeholder="Password" required>
+
+      <div class="password-toggle">
+        <input type="checkbox" id="togglePassword">
+        <label for="togglePassword">Show Password</label>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+    <p><a href="index.html" style="text-decoration: none; color: #235789; font-family: 'Parkinsans', sans-serif; margin-left: 70%;">Back to form</a></p>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+
+    toggle.addEventListener('change', () => {
+      password.type = toggle.checked ? 'text' : 'password';
+    });
+  </script>
+</body>
+</html>
